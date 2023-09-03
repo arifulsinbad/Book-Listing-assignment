@@ -28,9 +28,29 @@ model Login {
   id String @id @default(uuid())
   email String
   password String
+  @@map("login")
 }
 
-
+model Category {
+  id String @id @default(uuid())
+  title String
+  books Book[]
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+  @@map("categories")
+}
+model Book {
+  id String @id @default(uuid())
+  title String
+  author String
+  genre String
+  price String
+  publicationDate String
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+  categoryId String
+  category Category @relation(fields: [categoryId], references: [id])
+}
 enum Role {
   admin
   customer

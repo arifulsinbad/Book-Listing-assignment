@@ -18,6 +18,10 @@ const moduleRoutes = [
     path: '/auth',
     routes: AuthRoute,
   },
+  {
+    path: '/categories',
+    routes: AuthRoute,
+  },
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.routes));
