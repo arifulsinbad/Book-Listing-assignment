@@ -24,6 +24,12 @@ model User {
   @@map("users")
 }
 
+model Login {
+  id String @id @default(uuid())
+  email String
+  password String
+}
+
 
 enum Role {
   admin
