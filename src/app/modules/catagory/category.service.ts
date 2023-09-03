@@ -26,11 +26,7 @@ const getSingleFromDB = async (id: string): Promise<Category | null> => {
       id,
     },
     include: {
-      books: {
-        include: {
-          category: true,
-        },
-      },
+      books: true,
     },
   });
 

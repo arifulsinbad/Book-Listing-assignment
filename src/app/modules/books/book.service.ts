@@ -4,6 +4,8 @@ import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
 import {
+  bookPriceFields,
+  bookPriceFieldsMapper,
   bookRelationalFields,
   bookRelationalFieldsMapper,
   bookSearchableFields,
@@ -49,8 +51,18 @@ const getAllFromDB = async (
               id: (filterData as any)[key],
             },
           };
+        } else if (bookPriceFields.includes(key)) {
+          return {
+            [bookPriceFieldsMapper[key]]: {
+              min: (filterData as any)[parseInt(key)],
+              max: (filterData as any)[parseInt(key)],
+            },
+          };
         } else {
           return {
+            [key]: {
+              equals: (filterData as any)[key],
+            },
             [key]: {
               equals: (filterData as any)[key],
             },
@@ -90,8 +102,40 @@ const getAllFromDB = async (
     data: result,
   };
 };
+const updateIntoDB = async (id: string, data: Book): Promise<Book | null> => {
+  const result = await prisma.book.update({
+    where: {
+      id,
+    },
+    data,
+  });
+  return result;
+};
 
-export const BookServie = {
+const deleteFromDB = async (id: string): Promise<Book | null> => {
+  const result = await prisma.book.delete({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+const getSingleFromDB = async (id: string): Promise<Book | null> => {
+  const result = await prisma.book.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      category: true,
+    },
+  });
+  return result;
+};
+
+export const BookService = {
   insertIntoDB,
   getAllFromDB,
+  updateIntoDB,
+  deleteFromDB,
+  getSingleFromDB,
 };

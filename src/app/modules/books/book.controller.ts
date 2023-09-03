@@ -4,10 +4,10 @@ import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
 import { bookFilterableFields } from './book.constant';
-import { BookServie } from './book.service';
+import { BookService } from './book.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const result = await BookServie.insertIntoDB(req.body);
+  const result = await BookService.insertIntoDB(req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -19,7 +19,7 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, bookFilterableFields);
   const options = pick(req.query, ['limit', 'page', 'sortBy', 'sortOrder']);
-  const result = await BookServie.getAllFromDB(filters, options);
+  const result = await BookService.getAllFromDB(filters, options);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -28,8 +28,43 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     data: result.data,
   });
 });
+const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await BookService.updateIntoDB(id, req.body);
 
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book update success',
+    data: result,
+  });
+});
+const getSingleFromDB = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await BookService.getSingleFromDB(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book single fetched success',
+    data: result,
+  });
+});
+const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await BookService.deleteFromDB(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book single delete success',
+    data: result,
+  });
+});
 export const BookController = {
   insertIntoDB,
   getAllFromDB,
+  updateIntoDB,
+  deleteFromDB,
+  getSingleFromDB,
 };

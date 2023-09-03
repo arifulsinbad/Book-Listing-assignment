@@ -11,7 +11,12 @@ export const bookFilterableFields = [
 ];
 
 export const bookRelationalFields: string[] = ['categoryId'];
+export const bookPriceFields: string[] = ['minPrice', 'maxPrice'];
 
 export const bookRelationalFieldsMapper: { [key: string]: string } = {
   categoryId: 'category',
+};
+export const bookPriceFieldsMapper: { [key: string]: string } = {
+  minPrice: 'price',
+  maxPrice: 'price',
 };
