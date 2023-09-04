@@ -9,7 +9,16 @@ router.post(
   auth(ENUM_USER_ROLE.CUSTOMER),
   OrderController.insertIntoDB
 );
-router.get('/', OrderController.getAllFromDB);
-router.get('/:id', OrderController.getSingleFromDB);
+router.get('/', auth(ENUM_USER_ROLE.ADMIN), OrderController.getAllFromDB);
+router.get(
+  '/order',
+  auth(ENUM_USER_ROLE.CUSTOMER),
+  OrderController.getAllCustomer
+);
+router.get(
+  '/:id',
+  auth(ENUM_USER_ROLE.CUSTOMER, ENUM_USER_ROLE.ADMIN),
+  OrderController.getSingleFromDB
+);
 
 export const OrderRoute = router;

@@ -26,6 +26,17 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const getAllCustomer = catchAsync(async (req: Request, res: Response) => {
+  const user = (req as any).user;
+  const result = await OrderService.getAllCustomer(user.id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Order customer fetched success',
+    data: result,
+  });
+});
 const getSingleFromDB = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await OrderService.getSingleFromDB(id);
@@ -42,4 +53,5 @@ export const OrderController = {
   insertIntoDB,
   getAllFromDB,
   getSingleFromDB,
+  getAllCustomer,
 };

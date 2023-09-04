@@ -16,6 +16,14 @@ const getAllFromDB = async (): Promise<Order[]> => {
   const result = await prisma.order.findMany();
   return result;
 };
+const getAllCustomer = async (id: string): Promise<Order[]> => {
+  const result = await prisma.order.findMany({
+    where: {
+      userId: id,
+    },
+  });
+  return result;
+};
 const getSingleFromDB = async (id: string): Promise<Order | null> => {
   const result = await prisma.order.findUnique({
     where: {
@@ -29,4 +37,5 @@ export const OrderService = {
   insertIntoDB,
   getAllFromDB,
   getSingleFromDB,
+  getAllCustomer,
 };

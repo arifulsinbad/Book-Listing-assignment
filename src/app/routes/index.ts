@@ -1,6 +1,8 @@
 import express from 'express';
 import { AuthRoute } from '../modules/Auth/auth.route';
+import { MyProfileRoute } from '../modules/MyProfile/myProfile.route';
 import { OrderRoute } from '../modules/Order/order.route';
+import { BookRoute } from '../modules/books/book,route';
 import { CategoryRoute } from '../modules/catagory/catagory.route';
 import { UserRoute } from '../modules/user/user.route';
 
@@ -26,16 +28,20 @@ const moduleRoutes = [
   },
   {
     path: '/books',
-    routes: OrderRoute,
+    routes: BookRoute,
   },
   {
     path: '/orders',
     routes: OrderRoute,
   },
-  // {
-  //   path: '/profile',
-  //   routes: MyProfileRoute,
-  // },
+  {
+    path: '/',
+    routes: OrderRoute,
+  },
+  {
+    path: '/profile',
+    routes: MyProfileRoute,
+  },
 ];
 
 moduleRoutes.forEach(route => router.use(route.path, route.routes));
