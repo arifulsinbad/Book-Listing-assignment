@@ -36,6 +36,7 @@ model Category {
   id String @id @default(uuid())
   title String
   books Book[]
+  bookCategory BookCategory[]
   createdAt              DateTime             @default(now())
   updatedAt              DateTime             @updatedAt
   @@map("categories")
@@ -47,10 +48,22 @@ model Book {
   genre String
   price String
   publicationDate String
+  bookCategory BookCategory[]
   createdAt              DateTime             @default(now())
   updatedAt              DateTime             @updatedAt
   categoryId String
   category Category @relation(fields: [categoryId], references: [id])
+
+}
+
+model BookCategory {
+
+  bookId String
+  book Book @relation(fields: [bookId], references: [id])
+  categoryId String
+  category Category @relation(fields: [categoryId], references: [id])
+  @@id([categoryId, bookId])
+  @@map("book_category")
 }
 
 model Order {

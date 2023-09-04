@@ -1,4 +1,4 @@
-import { Book, Prisma } from '@prisma/client';
+import { Book, BookCategory, Prisma } from '@prisma/client';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -131,6 +131,26 @@ const getSingleFromDB = async (id: string): Promise<Book | null> => {
   });
   return result;
 };
+const assignCategory = async (
+  id: string,
+  payload: string[]
+): Promise<BookCategory[]> => {
+  await prisma.bookCategory.createMany({
+    data: payload.map(categoryId => ({
+      bookId: id,
+      categoryId: categoryId,
+    })),
+  });
+  const assignCategorydata = await prisma.bookCategory.findMany({
+    where: {
+      bookId: id,
+    },
+    include: {
+      category: true,
+    },
+  });
+  return assignCategorydata;
+};
 
 export const BookService = {
   insertIntoDB,
@@ -138,4 +158,5 @@ export const BookService = {
   updateIntoDB,
   deleteFromDB,
   getSingleFromDB,
+  assignCategory,
 };
