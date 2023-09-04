@@ -19,6 +19,7 @@ model User {
   contactNo String
   address String
   profileImg String
+  orders Order[]
   createdAt              DateTime             @default(now())
   updatedAt              DateTime             @updatedAt
   @@map("users")
@@ -51,6 +52,24 @@ model Book {
   categoryId String
   category Category @relation(fields: [categoryId], references: [id])
 }
+
+model Order {
+  id String @id @default(uuid())
+  userId String 
+  user User @relation(fields: [userId], references: [id])
+  orderedBooks Json[]
+  status OrderProccess @default(pending)
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+@@map("orders")
+}
+
+enum OrderProccess {
+  pending
+  shipped
+  delivered
+}
+
 enum Role {
   admin
   customer
