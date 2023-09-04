@@ -62,14 +62,14 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const assignCategory = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const data = req.body.categories;
+  const { categoryId } = req.params;
+
   // console.log(data);
-  const result = await BookService.assignCategory(id, data);
+  const result = await BookService.assignCategory(categoryId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: ' Book category assign successfully',
+    message: ' Book category fetched successfully',
     data: result,
   });
 });
