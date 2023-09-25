@@ -1,10 +1,10 @@
-## Book-Listing-assignment
+## BOOK-LISTING-ASSIGNMENT
 
 #### Live Link: https://book-listing-assignment-arifulsinbad.vercel.app
 
 #### Application Routes:
 
-##### User
+##### USER
 
 - api/v1/auth/signup (POST)
 
@@ -20,7 +20,7 @@
 
 - api/v1/profile (GET)
 
-##### Category
+##### CATEGORY
 
 - api/v1/categories/create-category (POST)
 
@@ -32,7 +32,7 @@
 
 - api/v1/categories/6177a5b87d32123f08d2f5d4 (DELETE) Include an id that is saved in your database
 
-##### Books
+##### BOOKS
 
 - api/v1/books/create-book (POST)
 
@@ -46,7 +46,7 @@
 
 - api/v1/books/:id (DELETE)
 
-##### Orders
+##### ORDERS
 
 - api/v1/orders/create-order (POST)
 
